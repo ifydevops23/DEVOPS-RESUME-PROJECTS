@@ -6,6 +6,7 @@ Connect the instance to a database for WordPress to store its data using
 Ansible
 Compose and upload your own Ansible project to GitHub
 |||info
+
 ## Make Sure You Know
 All Ansible concepts covered in the course
 
@@ -16,6 +17,7 @@ using Ansible. In order to showcase this project for your portfolio, you are
 going to use GitHub. If you do not yet have an account, please create one
 now. We are going to clone a repo that will contain the code for your
 Ansible configuration.
+
 ### Connecting GitHub and Codio
 You need to connect GitHub to your Codio account. This only needs to be
 done one time. Follow the connection guide, or follow these steps:
@@ -72,13 +74,13 @@ database.
 This demo will guide you, step by step, through creating your own
 portfolio-worthy project to showcase your knowledge of Ansible!
 Let’s begin!
-Step 1: Define Local Variables
+Step 1: Define Local Variables <br>
 Let’s start by defining some local variables that we will be using in our
-playbooks.
+playbooks.<br>
 You should see a blank vars/main.yml file open in the left panel; the
 variables will be propagated to roles, overriding default values in
 default/main.yml automatically when the role is included. Paste the
-following code in that file:
+following code in that file:<br>
 
 We’ve defined a couple variables for the database that our WordPress
 instance will need, including those for the role, database, and user:
@@ -86,37 +88,38 @@ instance will need, including those for the role, database, and user:
 database and user, respectively, that will be created for WordPress
 - wordpress_password specifies the password for the MySQL user
 - the variables mysql_databases and mysql_users are used by the my_sql
-role
+role<br>
 
-info
+info<br>
 You may have noticed that wordpress_db and wordpress_user are given
 the same name, wordpress. This is not common practice and is done to
-simplify this project.
+simplify this project.<br>
 It’s typical practice for the database to be called the same as the
-website, with the user having a separate name, like admin.
+website, with the user having a separate name, like admin.<br>
 It’s due to our project not deploying to a website but rather a local host
-that this is our preferred nomenclature.
+that this is our preferred nomenclature.<br>
 
-Let’s move on to installing dependencies!
-wordpress_db: wordpress
-wordpress_user: wordpress
-wordpress_password: wordpress_password
-mysql_root_password: super-secure-password
-mysql_databases:
-- name: "{{wordpress_db}}"
-mysql_users:
-- name: "{{wordpress_user}}"
-host: "%"
-password: "{{wordpress_password}}"
-priv: "{{wordpress_user}}.*:ALL"
+Let’s move on to installing dependencies!<br>
+wordpress_db: wordpress<br>
+wordpress_user: wordpress<br>
+wordpress_password: wordpress_password<br>
+mysql_root_password: super-secure-password<br>
 
-Step 2: Dependencies
-Installing Dependencies:
+mysql_databases:<br>
+- name: "{{wordpress_db}}"<br>
+mysql_users:<br>
+- name: "{{wordpress_user}}"<br>
+host: "%"<br>
+password: "{{wordpress_password}}"<br>
+priv: "{{wordpress_user}}.*:ALL"<br>
+
+Step 2: Dependencies<br>
+Installing Dependencies:<br>
 WordPress requires a database, so we will install MySQL and configure it
 using the third party role geerlingguy.mysql (the Ansible Galaxy link is
-here if you want to learn more).
+here if you want to learn more).<br>
 info
-Why does WordPress need a database?
+Why does WordPress need a database?<br>
 WordPress is a content management system (CMS) that is designed to
 dynamically generate web pages by fetching data from a database,
 making a relational (SQL) database is an essential part of any
@@ -124,28 +127,29 @@ WordPress site. The database stores account information, all the
 website content, as well as it’s configuration settings.
 When a user requests a web page, WordPress fetches the relevant data
 from the database and uses it to generate the requested page, making
-the website functional, smooth, and optimized.
+the website functional, smooth, and optimized.<br>
 
 Our playbook has its own dependencies, which we need to specify in the
 requirements.yml file, currently empty on shown on the left. We want to
 add the geerlingguy.mysql role from Ansible Galaxy, so copy the following
-code block into the requirements file:
+code block into the requirements file:<br>
 
 This role will install the MySQL dependencies locally, but by default it will
 not be installed to a local folder so you won’t see it appear in the file tree.
-To install, run the command below in the terminal:
+To install, run the command below in the terminal:<br>
 
 This command will install the dependencies (in this case the
-geerlingguy.mysql role) into our local box.
+geerlingguy.mysql role) into our local box.<br>
 With dependencies installed, we are ready to write our own custom role to
-install WordPress; Step 3 will guide you through the role assembly.
-roles:
-- name: geerlingguy.mysql
+install WordPress; Step 3 will guide you through the role assembly.<br>
 
-ansible-galaxy install -r Ansible-Capstone/requirements.yml
+roles:<br>
+- name: geerlingguy.mysql<br>
 
-Step 3a: WordPress Role
-WordPress Requirements
+ansible-galaxy install -r Ansible-Capstone/requirements.yml<br>
+
+Step 3a: WordPress Role<br>
+WordPress Requirements<br>
 Step 3a covers the installation and configuration of the Apache web server
 and the required PHP packages, which are required to run WordPress.
 ### Installing Required Packages for
@@ -241,7 +245,8 @@ recurse: true
 Step 3b: WordPress Role
 Installing and Configuring WordPress
 The tasks you will include in the WordPress role in Step 3b will install and
-configure the WordPress application
+configure the WordPress application<br>
+
 ### Unarchiving WordPress (Lines 37-44)
 Our next task downloads and extracts the WordPress archive file from the
 specified source URL, places the extracted files in the /var/www/html/
@@ -277,12 +282,14 @@ extra_opts: [--strip-components=1]
 
 is useful for ensuring that the extracted files are placed directly in
 the destination directory (/var/www/html/) rather than in a
-subdirectory within that directory.
+subdirectory within that directory.<br>
+
 ### Updating Config File (Lines 46-63)
 As discussed in the previous File Management assignment, we will be
 using the template module to generate the actual configuration file during
 the deployment process. This file, wp-config.php.j2, has been provided for
 you and is located in the /roles/wordpress/templates/ directory.
+<br>
 
 Lines 46-49 and Template File Breakdown:
 
@@ -298,14 +305,16 @@ In this specific template file, there are placeholders like {{wordpress_db}},
 {{wordpress_user}}, and {{wordpress_password}}, which are replaced with
 actual values during the deployment process. These values are specific to
 the environment where the WordPress application is being deployed,
-which we defined in the vars/main.yml file.
+which we defined in the vars/main.yml file.<br>
+
 ### Updating Ownership and Permissions
 (Lines 51-58)
 We are downloading directly from WordPress, so the files and directories
 will have their own ownership and permissions. We’ve already set file
 permissions, so our next task will be to change the ownership and
 permissions of the var/www/html directory, the root directory for the
-WordPress installation:
+WordPress installation:<br>
+
 - name: Update Config
 template:
 src: wp-config.php.j2
