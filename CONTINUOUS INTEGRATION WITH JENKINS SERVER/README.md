@@ -2,15 +2,15 @@
 
 One of the ways to guarantee fast and repeatable deployments is the Automation of routine tasks.<br>
 In this project, we are going to start automating part of our routine tasks with a free and open-source automation server – Jenkins.<br>
-It is one of the most popular CI/CD tools, it was created by a former Sun Microsystems developer Kohsuke Kawaguchi and the project originally had a named "Hudson".<br>
 
-According to Circle CI, Continuous integration (CI) is a software development strategy that increases the speed of development while ensuring the quality of the code that teams deploy. 
 Developers continually commit code in small increments (at least daily, or even several times a day), which is then automatically built and tested before it is merged with the shared repository<br>
-In our project we are going to utilize Jenkins CI capabilities to make sure that every change made to the source code in GitHub https://github.com/<username>/Tooling.git will be automatically be updated to the Tooling Website.<br>
+
+In our project we are going to utilize Jenkins CI capabilities to make sure that every change made to the source code in GitHub https://github.com/ifydevops23/Tooling_Website.git will be automatically be updated to the Tooling Website.<br>
 
 Task<br>
-Enhance the architecture prepared in Project 8 by adding a Jenkins server, and configuring a job to automatically deploy source code changes from Git to the NFS server.<br>
-Here is what your updated architecture will look like upon completion of this project:<br>
+Configure a job to automatically deploy source code changes from Git to the NFS server.<br>
+
+Here is what the updated architecture will look like upon completion of this project:<br>
 
 ![00_implemented](https://github.com/ifydevops23/CI_CD/assets/126971054/b62230a0-04cf-4517-9665-592deffd10bb)
 
@@ -28,9 +28,11 @@ Install Jenkins<br>![1_install_jdk_headless](https://github.com/ifydevops23/CI_C
 `sudo apt update`<br>
 Add Key if asked for Public Key<br>
 `sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5BA31D57EF5975CA`<br>
+
 ![1_wget_debiamn_pkg](https://github.com/ifydevops23/CI_CD/assets/126971054/8f4a88f4-7441-40f5-92e5-df8fd458ab7f)
 
 `sudo apt install jenkins`<br>
+
 ![1_install_jenkins](https://github.com/ifydevops23/CI_CD/assets/126971054/9c4dadd9-fe18-4e27-98ad-b96ed8d9960e)
 
 Make sure Jenkins is up and running<br>
@@ -73,7 +75,7 @@ The installation is completed!<br>
 
 ## STEP 2 – CONFIGURE JENKINS TO RETRIEVE SOURCE CODES FROM GITHUB USING WEBHOOKS.<br>
 
-In this part, you will learn how to configure a simple Jenkins job/project (these two terms can be used interchangeably). <br>
+In this part, I configured a simple Jenkins job/project (these two terms can be used interchangeably). <br>
 This job will be triggered by GitHub webhooks and will execute a ‘build’ task to retrieve codes from GitHub and store it locally on Jenkins server.<br>
 
 - Enable webhooks in your GitHub repository settings
