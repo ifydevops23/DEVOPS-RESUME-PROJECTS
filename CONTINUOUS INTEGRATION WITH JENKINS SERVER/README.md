@@ -1,4 +1,4 @@
-# DEPLOYMENT AUTOMATION WITH JENKINS SERVER
+# BUILD & DEPLOYMENT AUTOMATION WITH JENKINS SERVER
 
 One of the ways to guarantee fast and repeatable deployments is the Automation of routine tasks.<br>
 In this project, we are going to start automating part of our routine tasks with a free and open-source automation server – Jenkins.<br>
